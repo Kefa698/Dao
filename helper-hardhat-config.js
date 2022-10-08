@@ -31,6 +31,10 @@ const VOTING_PERIOD = 5;
 const VOTING_DELAY = 1;
 const QUARAM_PERCANTAGE = 4;
 const ADRESSZERO = "0x0000000000000000000000000000000000000000";
+const NEW_STORE_VALUE = 77;
+const FUNC = "store";
+const PROPOSAL_DESCRIPTION = "proposa #1 store 77 in the box";
+const proposalFile = "proposals.json";
 
 const developmentChains = ["hardhat", "localhost"];
 const VERIFICATION_BLOCK_CONFIRMATIONS = 6;
@@ -55,4 +59,8 @@ module.exports = {
   VOTING_DELAY,
   QUARAM_PERCANTAGE,
   ADRESSZERO,
+  NEW_STORE_VALUE,
+  FUNC,
+  PROPOSAL_DESCRIPTION,
+  proposalFile,
 };
