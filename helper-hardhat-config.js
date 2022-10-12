@@ -35,6 +35,7 @@ const NEW_STORE_VALUE = 77;
 const FUNC = "store";
 const PROPOSAL_DESCRIPTION = "proposa #1 store 77 in the box";
 const proposalFile = "proposals.json";
+const reason="engineer"
 
 const developmentChains = ["hardhat", "localhost"];
 const VERIFICATION_BLOCK_CONFIRMATIONS = 6;
@@ -63,4 +64,5 @@ module.exports = {
   FUNC,
   PROPOSAL_DESCRIPTION,
   proposalFile,
+  reason
 };

@@ -4,6 +4,7 @@ const {
   developmentChains,
   proposalFile,
   VOTING_PERIOD,
+  reason,
 } = require("../helper-hardhat-config");
 const { moveBlocks } = require("../utils/move-blocks");
 
@@ -15,7 +16,7 @@ async function vote(proposalIndex) {
   //0=against,1=for,2=abstain
   const voteWay = 1;
   const governor = await ethers.getContract("GovernorContract");
-  const reason = "i am a blockchain Engineer";
+  
   const voteTxResponse = await governor.castVoteWithReason(
     proposalId,
     voteWay,
