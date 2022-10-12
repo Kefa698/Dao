@@ -1,43 +1,35 @@
-const { network, ethers } = require("hardhat");
-const {
-  developmentChains,
-  VERIFICATION_BLOCK_CONFIRMATIONS,
-} = require("../helper-hardhat-config");
-const { verify } = require("../utils/verify");
+const { network, ethers } = require("hardhat")
+const { developmentChains, VERIFICATION_BLOCK_CONFIRMATIONS } = require("../helper-hardhat-config")
+const { verify } = require("../utils/verify")
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
-  const { deploy, log } = deployments;
-  const { deployer } = await getNamedAccounts();
-  const waitBlockConfirmations = developmentChains.includes(network.name)
-    ? 1
-    : VERIFICATION_BLOCK_CONFIRMATIONS;
+    const { deploy, log } = deployments
+    const { deployer } = await getNamedAccounts()
+    const waitBlockConfirmations = developmentChains.includes(network.name)
+        ? 1
+        : VERIFICATION_BLOCK_CONFIRMATIONS
 
-  log("----------------------------------------------------");
-  const arguments = [];
-  const box = await deploy("Box", {
-    from: deployer,
-    args: arguments,
-    log: true,
-    waitConfirmations: waitBlockConfirmations,
-  });
+    log("----------------------------------------------------")
+    const arguments = []
+    const box = await deploy("Box", {
+        from: deployer,
+        args: arguments,
+        log: true,
+        waitConfirmations: waitBlockConfirmations,
+    })
 
-  const timelock = await ethers.getContract("Timelock");
-  const boxContract = await ethers.getContractAt("Box", box.address);
-  const transferOwnershipTx = await boxContract.transferOwnership(
-    timelock.address
-  );
-  await transferOwnershipTx.waitBlockConfirmations;
-  log("Transfered ownership--------------------------");
+    const timelock = await ethers.getContract("Timelock")
+    const boxContract = await ethers.getContractAt("Box", box.address)
+    const transferOwnershipTx = await boxContract.transferOwnership(timelock.address)
+    await transferOwnershipTx.waitBlockConfirmations
+    log("Transfered ownership--------------------------")
 
-  // Verify the deployment
-  if (
-    !developmentChains.includes(network.name) &&
-    process.env.ETHERSCAN_API_KEY
-  ) {
-    log("Verifying...");
-    await verify(box.address, arguments);
-  }
-  log("----------------------------------------------------");
-};
+    // Verify the deployment
+    if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+        log("Verifying...")
+        await verify(box.address, arguments)
+    }
+    log("----------------------------------------------------")
+}
 
-module.exports.tags = ["all", "box"];
+module.exports.tags = ["all", "box"]
